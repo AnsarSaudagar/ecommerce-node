@@ -2,6 +2,7 @@
 import express, { Application } from 'express';
 import sequelize from './config/database';
 import dotenv from 'dotenv';
+
 // import userRoutes from './routes/userRoutes';
 
 dotenv.config();

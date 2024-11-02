@@ -1,7 +1,7 @@
 import { Model, DataTypes, Optional } from "sequelize";
 import sequelize from "../config/database"
 
-interface UserAttributes {
+export interface UserAttributes {
   id: number;
   first_name: string;
   middle_name?: string | null;
@@ -101,7 +101,7 @@ User.init(
     },
   },
   {
-    sequelize, // Pass the connection instance
+    sequelize,
     tableName: "users",
     timestamps: true,
     createdAt: "created_at",
