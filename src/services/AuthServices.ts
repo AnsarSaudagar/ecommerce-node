@@ -6,14 +6,23 @@ import { User } from "../models/User";
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
 export class AuthService {
+
   /**
-   *
-   * @param userDetails
-   * @returns newly registered user
-   *
-   * It will take the data from the body and it will save the new user after hashing the password
-   */
-  async register(userDetails: User) {
+ * Registers a new user with the provided details, including hashing the password before saving to the database.
+ *
+ * @async
+ * @param {User} userDetails - An object containing the user's registration details. 
+ * Must include a `password` field, which will be hashed before saving.
+ * @returns {Promise<User>} A promise that resolves to the newly created user object.
+ *
+ * @description
+ * This asynchronous function takes user details as input, hashes the password using bcrypt for security, 
+ * and then saves the user to the database. The function ensures that sensitive password information is 
+ * not stored in plain text. Upon successful registration, it returns the created user object.
+ *
+ * @throws {Error} If there’s an issue with saving the user to the database or hashing the password
+ */
+  async register(userDetails: User) : Promise<User>{
     const hashedPassword = await bcrypt.hash(userDetails.password, 10);
     userDetails.password = hashedPassword;
 
