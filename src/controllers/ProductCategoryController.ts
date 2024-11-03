@@ -11,7 +11,8 @@ export class ProductCategoryController {
 
   async getAllCategories(req: Request, res: Response) {
     try {
-      const categories = await this.productCategoryService.getAllCategories();
+      const categories: ProductCategory[] =
+        await this.productCategoryService.getAllCategories();
       res.json(categories);
     } catch (error: any) {
       res.status(500).json({ error: error.message });

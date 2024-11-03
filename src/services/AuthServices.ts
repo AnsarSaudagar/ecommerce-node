@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { User } from "../models/User";
-// import { UserCreationAttributes } from '../models/User';
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
