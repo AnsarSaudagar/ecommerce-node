@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { AuthService } from "../services/authServices";
 import { User } from "../models/User";
+import { AuthService } from "../services/AuthServices";
 
 export class AuthController {
   private authService: AuthService;

@@ -15,6 +15,10 @@ app.use(express.json());
 // Register Routes
 app.use('/auth', authRoutes);
 
+// Error handling middleware
+app.use((err: any, req: any, res: any, next: any) => {
+  res.status(err.status || 500).json({ message: err.message });
+});
 
 
 // Start Server
