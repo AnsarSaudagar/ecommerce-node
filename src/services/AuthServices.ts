@@ -5,7 +5,7 @@ import { User } from "../models/User";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
-export class AuthService {
+export class AuthService {  
   /**
    * Registers a new user with the provided details, including hashing the password before saving to the database.
    *
