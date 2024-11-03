@@ -2,8 +2,7 @@
 import express, { Application } from 'express';
 import sequelize from './config/database';
 import dotenv from 'dotenv';
-
-// import userRoutes from './routes/userRoutes';
+import authRoutes from './routes/authRoutes';
 
 dotenv.config();
 
@@ -14,7 +13,9 @@ app.use(express.json());
 
 
 // Register Routes
-// app.use('/api/users', userRoutes);
+app.use('/auth', authRoutes);
+
+
 
 // Start Server
 

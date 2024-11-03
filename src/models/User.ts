@@ -16,7 +16,7 @@ export interface UserAttributes {
 }
 
 // Optional fields for the creation of a new user
-interface UserCreationAttributes
+export interface UserCreationAttributes
   extends Optional<
     UserAttributes,
     | "middle_name"
