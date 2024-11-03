@@ -6,6 +6,13 @@ import { User } from "../models/User";
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
 export class AuthService {
+  /**
+   *
+   * @param userDetails
+   * @returns newly registered user
+   *
+   * It will take the data from the body and it will save the new user after hashing the password
+   */
   async register(userDetails: User) {
     const hashedPassword = await bcrypt.hash(userDetails.password, 10);
     userDetails.password = hashedPassword;
@@ -15,7 +22,25 @@ export class AuthService {
     return user;
   }
 
-  async login(email: string, password: string) {
+  /**
+   * Authenticates the user with the provided email and password, returning a token and user data if successful.
+   *
+   * @param {string} email - The user's email address. Must be a valid, registered email.
+   * @param {string} password - The user's password. Should match the password stored for the provided email.
+   * @returns {{ token: string, use: User }} An object containing a JWT token and the authenticated user's data.
+   *
+   * @description
+   * This function verifies the user's email and password. If the email is registered and the password matches, it
+   * generates a JSON Web Token (JWT) for authentication and returns the token along with the user's data. The token
+   * can be used for accessing protected routes and expires after a set period.
+   *
+   * @throws {Error} If authentication fails due to an incorrect email or password, or if there’s a server error.
+   *
+   */
+  async login(
+    email: string,
+    password: string
+  ): Promise<{ token: string; user: User | null }> {
     const user: User | null = await User.findOne({ where: { email: email } });
 
     if (!user) throw new Error("User not found");
@@ -27,7 +52,23 @@ export class AuthService {
     return { user, token };
   }
 
-  generateToken(userId: number) {
+  /**
+   * Generates an authentication token based on the provided user ID.
+   *
+   * @param {string} userId - The unique identifier for the user. This ID is used to generate the token.
+   * @returns {string} A JWT (JSON Web Token) that expires in 1 hour.
+   *
+   * @description
+   * This function generates a JSON Web Token (JWT) using the provided user ID.
+   *
+   * @throws {Error} If the token generation fails.
+   *
+   * @example
+   * // Example usage:
+   * const token = generateToken("user123");
+   * console.log(token); // Prints the generated token
+   */
+  generateToken(userId: number): string {
     return jwt.sign({ userId }, JWT_SECRET, { expiresIn: "1h" });
   }
 
