@@ -4,6 +4,7 @@ import sequelize from './config/database';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
 import productCategoryRoutes from './routes/productCategoryRoutes';
+import productRoutes from './routes/productRoutes';
 import cors from 'cors';
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(cors());
 // Register Routes
 app.use('/auth', authRoutes);
 app.use('/product-category', productCategoryRoutes);
+app.use('/products', productRoutes);
 
 
 // Error handling middleware
