@@ -18,7 +18,7 @@ export interface ProductCategoryCreationAttributes
 export class ProductCategory
   extends Model<ProductCategoryAttributes, ProductCategoryCreationAttributes>
   implements ProductCategoryAttributes
-{
+{   
   public id!: number;
   public name!: string;
   public image!: string | null;
