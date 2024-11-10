@@ -35,6 +35,9 @@ import {
     public status!: number;
     public created_at?: Date | null;
     public updated_at?: Date | null;
+
+    public static STATUS_ACTIVE = 1;
+    public static STATUS_PURCHASED = 2;
   
     // Association mixins for eager loading
     public getUser!: BelongsToGetAssociationMixin<User>;
@@ -83,7 +86,7 @@ import {
       status: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 1, // Assume 1 is STATUS_ACTIVE
+        defaultValue: Cart.STATUS_ACTIVE, // Assume 1 is STATUS_ACTIVE
       },
       created_at: {
         type: DataTypes.DATE,
