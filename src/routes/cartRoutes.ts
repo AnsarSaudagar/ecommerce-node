@@ -8,4 +8,8 @@ router.get("/all", (req: Request, res: Response) => {
   cartController.getAllCarts(req, res);
 });
 
+router.post("/", (req: Request, res: Response) => {
+  cartController.addProductToUserCart(req, res);
+});
+
 export default router;

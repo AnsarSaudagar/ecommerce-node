@@ -59,7 +59,7 @@ import {
         type: DataTypes.BIGINT.UNSIGNED,
         allowNull: false,
         references: {
-          model: User, // Reference to the User model
+          model: User, 
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -69,7 +69,7 @@ import {
         type: DataTypes.BIGINT.UNSIGNED,
         allowNull: false,
         references: {
-          model: Product, // Reference to the Product model
+          model: Product, 
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -105,7 +105,6 @@ import {
     }
   );
   
-  // Define associations (can also be done in `src/models/index.ts` if desired)
   Cart.belongsTo(User, {
     foreignKey: "user_id",
     as: "user",
