@@ -86,7 +86,7 @@ import {
       status: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: Cart.STATUS_ACTIVE, // Assume 1 is STATUS_ACTIVE
+        defaultValue: Cart.STATUS_ACTIVE, 
       },
       created_at: {
         type: DataTypes.DATE,

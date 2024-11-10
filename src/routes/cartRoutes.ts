@@ -12,4 +12,12 @@ router.post("/", (req: Request, res: Response) => {
   cartController.addProductToUserCart(req, res);
 });
 
+router.get("/:user_id", (req: Request, res: Response) => {
+  cartController.getUserCart(req, res);
+});
+
+router.get("/:user_id/:category_id", (req: Request, res: Response) => {
+    cartController.getUserCartCategoryWise(req, res);
+});
+
 export default router;

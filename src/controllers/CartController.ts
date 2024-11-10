@@ -19,12 +19,35 @@ export class CartController {
 
   async addProductToUserCart(req: Request, res: Response) {
     try {
-        const new_cart = await this.cartService.addProductToUserCart(req.body)
-        res.status(201).json({
-            message: "Cart successfully added",
-            cart: new_cart
-        })
+      const new_cart = await this.cartService.addProductToUserCart(req.body);
+      res.status(201).json({
+        message: "Cart successfully added",
+        cart: new_cart,
+      });
     } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  }
+
+  async getUserCart(req: Request, res: Response) {
+    try {
+      const carts = await this.cartService.getUserCart(+req.params.user_id);
+      res.json(carts);
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  }
+
+  async getUserCartCategoryWise(req: Request, res: Response) {
+    try {
+      const carts = await this.cartService.getUserCartCategoryWise(
+        +req.params.user_id,
+        +req.params.category_id
+      );
+      res.json(carts);
+    } catch (error) {
+        console.log(error);
+        
       res.status(500).json({ message: error });
     }
   }
