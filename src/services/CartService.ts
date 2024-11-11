@@ -1,3 +1,4 @@
+import sequelize from "sequelize";
 import { Cart } from "../models/Cart";
 import { Product } from "../models/Product";
 
@@ -67,7 +68,7 @@ export class CartService {
     throw new Error("Cart was not able to be deleted due to some error");
   }
 
-  async updatingCartCount(cart_id: number, count: number) {
+  async updatingCartCount(cart_id: number, count: number): Promise<Cart> {
     const cart: Cart | null = await Cart.findOne({
       where: {
         id: cart_id,
@@ -79,5 +80,17 @@ export class CartService {
     cart.count += count;
     cart.save();
     return cart;
+  }
+
+  async userCartCount(user_id: number): Promise<Cart[]> {
+    console.log(user_id);
+    
+    const carts: Cart[] = await Cart.findAll({
+      where: {
+        user_id: user_id,
+        status: Cart.STATUS_ACTIVE,
+      },
+    });
+    return carts;
   }
 }

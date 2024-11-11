@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { CartService } from "../services/CartService";
+import { Cart } from "../models/Cart";
 
 export class CartController {
   private cartService: CartService;
@@ -78,6 +79,27 @@ export class CartController {
         count
       );
       res.json(updated_cart);
+    } catch (error) {
+      res.status(500).json({
+        message: error,
+      });
+    }
+  }
+
+  async userCartCount(req: Request, res: Response) {
+    try {
+      let count: number = 0;
+      console.log("params = " + req.params.user_id);
+      
+      const carts: Cart[] = await this.cartService.userCartCount(
+        +req.params.user_id
+      );
+      carts.forEach((cart: Cart) => {
+        count += cart.count;
+      });
+      res.json({
+        count: count,
+      });
     } catch (error) {
       res.status(500).json({
         message: error,
