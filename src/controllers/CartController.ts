@@ -46,9 +46,26 @@ export class CartController {
       );
       res.json(carts);
     } catch (error) {
-        console.log(error);
-        
+      console.log(error);
+
       res.status(500).json({ message: error });
+    }
+  }
+
+  async deleteSingleProductFromCart(req: Request, res: Response) {
+    try {
+      const deleted_cart = await this.cartService.deleteSingleProductFromCart(
+        +req.params.cart_id
+      );
+
+      res.status(200).json({
+        message: "Cart deleted successfully",
+        deleted_cart: deleted_cart,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: error,
+      });
     }
   }
 }

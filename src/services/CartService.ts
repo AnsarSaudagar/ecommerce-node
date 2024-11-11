@@ -53,4 +53,18 @@ export class CartService {
     });
     return carts;
   }
+
+  async deleteSingleProductFromCart(cart_id: number): Promise<Cart | null> {
+    const deleted_cart: Cart | null = await Cart.findOne({
+      where: {
+        id: cart_id,
+      },
+    });
+    if(deleted_cart?.destroy()){
+        return deleted_cart;
+    }
+
+    throw new Error("Cart was not able to be deleted due to some error");
+    
+  }
 }

@@ -17,7 +17,11 @@ router.get("/:user_id", (req: Request, res: Response) => {
 });
 
 router.get("/:user_id/:category_id", (req: Request, res: Response) => {
-    cartController.getUserCartCategoryWise(req, res);
+  cartController.getUserCartCategoryWise(req, res);
+});
+
+router.delete("/:cart_id", (req: Request, res: Response) => {
+  cartController.deleteSingleProductFromCart(req, res);
 });
 
 export default router;
