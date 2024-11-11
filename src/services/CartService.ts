@@ -15,6 +15,13 @@ export class CartService {
 
   async getUserCart(user_id: number): Promise<Cart[]> {
     const carts = await Cart.findAll({
+      include: [
+        {
+          model: Product,
+          as: "product",
+          attributes: ["id", "name", "description", "price"],
+        },
+      ],
       where: {
         user_id: user_id,
         status: Cart.STATUS_ACTIVE,
@@ -40,7 +47,7 @@ export class CartService {
             category_id: category_id,
           },
           as: "product",
-          attributes: ["id"],
+          attributes: ["id", "name", "description", "price"],
         },
       ],
     });
