@@ -60,11 +60,24 @@ export class CartService {
         id: cart_id,
       },
     });
-    if(deleted_cart?.destroy()){
-        return deleted_cart;
+    if (deleted_cart?.destroy()) {
+      return deleted_cart;
     }
 
     throw new Error("Cart was not able to be deleted due to some error");
-    
+  }
+
+  async updatingCartCount(cart_id: number, count: number) {
+    const cart: Cart | null = await Cart.findOne({
+      where: {
+        id: cart_id,
+      },
+    });
+    if (!cart) {
+      throw new Error("Cart not available");
+    }
+    cart.count += count;
+    cart.save();
+    return cart;
   }
 }

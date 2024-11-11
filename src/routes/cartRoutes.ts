@@ -24,4 +24,8 @@ router.delete("/:cart_id", (req: Request, res: Response) => {
   cartController.deleteSingleProductFromCart(req, res);
 });
 
+router.patch("/:cart_id", (req: Request, res: Response) => {
+    cartController.updatingCartCount(req, res);
+});
+
 export default router;

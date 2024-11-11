@@ -68,4 +68,20 @@ export class CartController {
       });
     }
   }
+
+  async updatingCartCount(req: Request, res: Response) {
+    try {
+      const count: number = req.body.count;
+      const cart_id: number = +req.params.cart_id;
+      const updated_cart = await this.cartService.updatingCartCount(
+        cart_id,
+        count
+      );
+      res.json(updated_cart);
+    } catch (error) {
+      res.status(500).json({
+        message: error,
+      });
+    }
+  }
 }
