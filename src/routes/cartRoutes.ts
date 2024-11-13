@@ -7,7 +7,7 @@ const cartController = new CartController();
 router.get("/all", (req: Request, res: Response) => {
   cartController.getAllCarts(req, res);
 });
-
+    
 router.post("/", (req: Request, res: Response) => {
   cartController.addProductToUserCart(req, res);
 });
@@ -24,7 +24,7 @@ router.get("/:user_id/:category_id", (req: Request, res: Response) => {
   cartController.getUserCartCategoryWise(req, res);
 });
 
-router.delete("/:cart_id", (req: Request, res: Response) => {
+router.delete("/:user_id/:product_id", (req: Request, res: Response) => {
   cartController.deleteSingleProductFromCart(req, res);
 });
 

@@ -55,10 +55,14 @@ export class CartService {
     return carts;
   }
 
-  async deleteSingleProductFromCart(cart_id: number): Promise<Cart | null> {
+  async deleteSingleProductFromCart(
+    user_id: number,
+    product_id: number
+  ): Promise<Cart | null> {
     const deleted_cart: Cart | null = await Cart.findOne({
       where: {
-        id: cart_id,
+        user_id: user_id,
+        product_id: product_id,
       },
     });
     if (deleted_cart?.destroy()) {
@@ -84,7 +88,7 @@ export class CartService {
 
   async userCartCount(user_id: number): Promise<Cart[]> {
     console.log(user_id);
-    
+
     const carts: Cart[] = await Cart.findAll({
       where: {
         user_id: user_id,

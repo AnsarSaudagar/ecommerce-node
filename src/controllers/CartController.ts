@@ -56,7 +56,8 @@ export class CartController {
   async deleteSingleProductFromCart(req: Request, res: Response) {
     try {
       const deleted_cart = await this.cartService.deleteSingleProductFromCart(
-        +req.params.cart_id
+        +req.params.user_id,
+        +req.params.product_id,
       );
 
       res.status(200).json({
