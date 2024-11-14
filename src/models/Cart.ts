@@ -38,6 +38,9 @@ import {
 
     public static STATUS_ACTIVE = 1;
     public static STATUS_PURCHASED = 2;
+
+    public static UPDATE_TYPE_NEW = 1;
+    public static UPDATE_TYPE_CALC = 2;
   
     // Association mixins for eager loading
     public getUser!: BelongsToGetAssociationMixin<User>;

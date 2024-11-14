@@ -75,9 +75,11 @@ export class CartController {
     try {
       const count: number = req.body.count;
       const cart_id: number = +req.params.cart_id;
+      const update_type: number = +req.body.update_type;
       const updated_cart = await this.cartService.updatingCartCount(
         cart_id,
-        count
+        count,
+        update_type
       );
       res.json(updated_cart);
     } catch (error) {

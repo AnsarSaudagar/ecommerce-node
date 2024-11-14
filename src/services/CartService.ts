@@ -72,7 +72,7 @@ export class CartService {
     throw new Error("Cart was not able to be deleted due to some error");
   }
 
-  async updatingCartCount(cart_id: number, count: number): Promise<Cart> {
+  async updatingCartCount(cart_id: number, count: number, update_type: number): Promise<Cart> {
     const cart: Cart | null = await Cart.findOne({
       where: {
         id: cart_id,
@@ -81,7 +81,11 @@ export class CartService {
     if (!cart) {
       throw new Error("Cart not available");
     }
-    cart.count += count;
+    if(update_type === Cart.UPDATE_TYPE_CALC){
+      cart.count += count;
+    }else{
+      cart.count = count;
+    }
     cart.save();
     return cart;
   }
