@@ -107,4 +107,20 @@ export class CartController {
       });
     }
   }
+
+  async deleteAllCartOfUser(req: Request, res: Response){
+    try {
+      
+      const cartDeleted = await this.cartService.deleteAllCartOfUser(+req.params.user_id);
+      res.status(200).json({
+        message: "Cart deleted successfully",
+      });
+    } catch (error) {
+      console.log(error);
+      
+      res.status(500).json({
+        message: error,
+      });
+    }
+  }
 }

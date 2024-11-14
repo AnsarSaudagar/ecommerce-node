@@ -7,13 +7,13 @@ const cartController = new CartController();
 router.get("/all", (req: Request, res: Response) => {
   cartController.getAllCarts(req, res);
 });
-    
+
 router.post("/", (req: Request, res: Response) => {
   cartController.addProductToUserCart(req, res);
 });
 
 router.get("/count/:user_id", (req: Request, res: Response) => {
-    cartController.userCartCount(req, res);
+  cartController.userCartCount(req, res);
 });
 
 router.get("/:user_id", (req: Request, res: Response) => {
@@ -24,6 +24,11 @@ router.get("/:user_id/:category_id", (req: Request, res: Response) => {
   cartController.getUserCartCategoryWise(req, res);
 });
 
+
+router.delete("/delete/:user_id", (req: Request, res: Response) => {
+  cartController.deleteAllCartOfUser(req, res);
+});
+
 router.delete("/:user_id/:product_id", (req: Request, res: Response) => {
   cartController.deleteSingleProductFromCart(req, res);
 });
@@ -31,7 +36,5 @@ router.delete("/:user_id/:product_id", (req: Request, res: Response) => {
 router.patch("/:cart_id", (req: Request, res: Response) => {
   cartController.updatingCartCount(req, res);
 });
-
-
 
 export default router;

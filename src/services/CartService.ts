@@ -87,8 +87,6 @@ export class CartService {
   }
 
   async userCartCount(user_id: number): Promise<Cart[]> {
-    console.log(user_id);
-
     const carts: Cart[] = await Cart.findAll({
       where: {
         user_id: user_id,
@@ -96,5 +94,18 @@ export class CartService {
       },
     });
     return carts;
+  }
+
+  async deleteAllCartOfUser(user_id: number): Promise<boolean | Error> {
+    const carts_deleted = await Cart.destroy({
+      where: {
+        user_id: user_id,
+      },
+    });
+    if (carts_deleted) {
+      return true;
+    }
+
+    throw new Error("Carts was not deleteds");
   }
 }
