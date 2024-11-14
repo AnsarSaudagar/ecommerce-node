@@ -57,7 +57,7 @@ export class CartController {
     try {
       const deleted_cart = await this.cartService.deleteSingleProductFromCart(
         +req.params.user_id,
-        +req.params.product_id,
+        +req.params.product_id
       );
 
       res.status(200).json({
@@ -91,7 +91,7 @@ export class CartController {
     try {
       let count: number = 0;
       console.log("params = " + req.params.user_id);
-      
+
       const carts: Cart[] = await this.cartService.userCartCount(
         +req.params.user_id
       );
@@ -108,16 +108,15 @@ export class CartController {
     }
   }
 
-  async deleteAllCartOfUser(req: Request, res: Response){
+  async deleteAllCartOfUser(req: Request, res: Response) {
     try {
-      
-      const cartDeleted = await this.cartService.deleteAllCartOfUser(+req.params.user_id);
+      const cartDeleted = await this.cartService.deleteAllCartOfUser(
+        +req.params.user_id
+      );
       res.status(200).json({
         message: "Cart deleted successfully",
       });
     } catch (error) {
-      console.log(error);
-      
       res.status(500).json({
         message: error,
       });

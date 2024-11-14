@@ -100,6 +100,7 @@ export class CartService {
     const carts_deleted = await Cart.destroy({
       where: {
         user_id: user_id,
+        status: Cart.STATUS_ACTIVE
       },
     });
     if (carts_deleted) {
