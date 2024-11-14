@@ -1,22 +1,22 @@
-// src/middleware/authMiddleware.ts
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
+dotenv.config();
 
-export const authMiddleware = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) return res.status(401).json({ message: "Access Denied" });
+const JWT_SECRET = process.env.JWT_SECRET as string;
 
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    (req as any).user = decoded;
-    next();
-  } catch (error) {
-    res.status(401).json({ message: "Invalid token" });
-  }
+export const authenticateToken = (req: any, res: any, next: NextFunction) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (!token) return res.status(401).json({ message: 'Access Token Required' });
+
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+        req.user = decoded; // Attach userId to req.user
+        next();
+    } catch (err) {
+        res.status(403).json({ message: 'Invalid Token' });
+    }
 };

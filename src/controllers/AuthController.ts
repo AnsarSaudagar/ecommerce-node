@@ -41,4 +41,16 @@ export class AuthController {
       res.status(401).json({ message: error.message });
     }
   }
+  async getProfile(req: any, res: any) {
+    try {
+      const user = await User.findOne({ where: { id: req.user.userId } }); // Access userId from the token
+      if (!user) return res.status(404).json({ message: "User not found" });
+
+      res.json({ user });
+    } catch (err) {
+      console.log(err);
+
+      res.status(500).json({ message: "Server error" });
+    }
+  }
 }
