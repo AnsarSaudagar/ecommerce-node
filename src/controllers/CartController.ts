@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { CartService } from "../services/CartService";
 import { Cart } from "../models/Cart";
+import { IGetUserAuthInfoRequest } from "../@types/express";
 
 export class CartController {
   private cartService: CartService;
@@ -118,6 +119,26 @@ export class CartController {
       res.status(200).json({
         message: "Cart deleted successfully",
       });
+    } catch (error) {
+      res.status(500).json({
+        message: error,
+      });
+    }
+  }
+
+  async createOrUpdateCart(req: IGetUserAuthInfoRequest, res: Response) {
+    try {
+      if (!req.userId) {
+        throw new Error("User not authenticated");
+      }
+      const user_id = +req.userId;
+
+      const cart = await this.cartService.createOrUpdateCart(
+        +req.params.product_id,
+        user_id,
+        req.body.count
+      );
+      res.json(cart);
     } catch (error) {
       res.status(500).json({
         message: error,

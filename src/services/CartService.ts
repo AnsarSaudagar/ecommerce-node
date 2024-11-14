@@ -72,7 +72,11 @@ export class CartService {
     throw new Error("Cart was not able to be deleted due to some error");
   }
 
-  async updatingCartCount(cart_id: number, count: number, update_type: number): Promise<Cart> {
+  async updatingCartCount(
+    cart_id: number,
+    count: number,
+    update_type: number
+  ): Promise<Cart> {
     const cart: Cart | null = await Cart.findOne({
       where: {
         id: cart_id,
@@ -81,9 +85,9 @@ export class CartService {
     if (!cart) {
       throw new Error("Cart not available");
     }
-    if(update_type === Cart.UPDATE_TYPE_CALC){
+    if (update_type === Cart.UPDATE_TYPE_CALC) {
       cart.count += count;
-    }else{
+    } else {
       cart.count = count;
     }
     cart.save();
@@ -104,7 +108,7 @@ export class CartService {
     const carts_deleted = await Cart.destroy({
       where: {
         user_id: user_id,
-        status: Cart.STATUS_ACTIVE
+        status: Cart.STATUS_ACTIVE,
       },
     });
     if (carts_deleted) {
@@ -112,5 +116,33 @@ export class CartService {
     }
 
     throw new Error("Carts was not deleteds");
+  }
+
+  async createOrUpdateCart(
+    product_id: number,
+    user_id: number,
+    count: number
+  ): Promise<Cart> {
+    const product_cart: Cart | null = await Cart.findOne({
+      where: {
+        user_id: user_id,
+        product_id: product_id,
+      },
+    });
+
+    if (product_cart) {
+      product_cart.count = count;
+      product_cart.save();
+      return product_cart;
+    }
+
+    const new_cart: Cart = await Cart.create({
+      count: count,
+      user_id: user_id,
+      product_id: product_id,
+      status: Cart.STATUS_ACTIVE,
+    });
+
+    return new_cart;
   }
 }

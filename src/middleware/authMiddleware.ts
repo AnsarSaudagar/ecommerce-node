@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { IGetUserAuthInfoRequest } from '../@types/express';
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ export const authenticateToken = (req: any, res: any, next: NextFunction) => {
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
-        req.user = decoded; // Attach userId to req.user
+        req.userId =  decoded.userId ; // Attach userId to req.user
         next();
     } catch (err) {
         res.status(403).json({ message: 'Invalid Token' });

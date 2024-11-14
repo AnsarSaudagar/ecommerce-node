@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../models/User";
 import { AuthService } from "../services/AuthServices";
+import { IGetUserAuthInfoRequest } from "../@types/express";
 
 export class AuthController {
   private authService: AuthService;
@@ -43,7 +44,7 @@ export class AuthController {
   }
   async getProfile(req: any, res: any) {
     try {
-      const user = await User.findOne({ where: { id: req.user.userId } }); // Access userId from the token
+      const user = await User.findOne({ where: { id: req.userId } }); // Access userId from the token
       if (!user) return res.status(404).json({ message: "User not found" });
 
       res.json({ user });

@@ -1,5 +1,6 @@
 import { Request, Router, Response } from "express";
 import { CartController } from "../controllers/CartController";
+import { authenticateToken } from "../middleware/authMiddleware";
 
 const router = Router();
 const cartController = new CartController();
@@ -36,5 +37,9 @@ router.delete("/:user_id/:product_id", (req: Request, res: Response) => {
 router.patch("/:cart_id", (req: Request, res: Response) => {
   cartController.updatingCartCount(req, res);
 });
+
+router.post("/action/:product_id", authenticateToken, (req, res) => {
+  cartController.createOrUpdateCart(req, res)
+})
 
 export default router;
