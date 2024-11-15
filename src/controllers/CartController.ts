@@ -139,7 +139,7 @@ export class CartController {
         req.body.count
       );
       res.json(cart);
-    } catch (error) {
+    } catch (error: unknown) {
       res.status(500).json({
         message: error,
       });

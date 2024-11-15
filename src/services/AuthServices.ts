@@ -47,7 +47,7 @@ export class AuthService {
   async login(
     email: string,
     password: string
-  ): Promise<{ token: string; user: User | null }> {
+  ): Promise<{ token: string; user: User | null, expiresIn: number }> {
     const user: User | null = await User.findOne({ where: { email: email } });
 
     if (!user) throw new Error("User not found");
@@ -55,8 +55,10 @@ export class AuthService {
     const isPassword = await bcrypt.compare(password, user.password);
     if (!isPassword) throw new Error("Invalid Password");
 
+    const expiresIn = 60 * 60;
+
     const token = this.generateToken(user.id);
-    return { user, token };
+    return { user, token , expiresIn};
   }
 
   /**
