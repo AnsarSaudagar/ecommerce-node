@@ -1,7 +1,7 @@
 import { Address } from "../models/Address";
 
 export class AddressService {
-  async addNewAddress(address_details: Address) {
+  async addNewAddress(address_details: Address) : Promise<Address> {
     const allUserAddress: Address[] | null = await Address.findAll({
       where: {
         user_id: address_details.user_id,
@@ -12,7 +12,7 @@ export class AddressService {
     if (allUserAddress.length === 0) {
       address_details["is_default"] = Address.IS_DEFAULT;
       console.log(address_details);
-      
+
       const address = await Address.create(address_details);
       return address;
     }
@@ -35,6 +35,11 @@ export class AddressService {
     }
     const address = await Address.create(address_details);
     return address;
+  }
 
+  async getUserAddresses(user_id: number) : Promise<Address[]>{
+    const addresses: Address[] = await Address.findAll({ where: { user_id: user_id } });
+
+    return addresses;
   }
 }
