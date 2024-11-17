@@ -61,4 +61,22 @@ export class AddressController {
       });
     }
   }
+
+  async updateAddress(req: IGetUserAuthInfoRequest, res: Response) {
+    try {
+      if (!req.userId) {
+        throw new Error("User is not authenticated");
+      }
+
+      const updated_address = await this.addressService.updateAddress(req.body);
+
+      res.json({
+        message: "Address Updated",
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: error,
+      });
+    }
+  }
 }

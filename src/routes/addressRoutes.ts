@@ -17,4 +17,8 @@ router.delete("/delete/:address_id", authenticateToken, (req, res) => {
     addressController.deleteSingleUserAddress(req, res);
 })
 
+router.patch("/update", authenticateToken, (req, res) => {
+    addressController.updateAddress(req, res)
+})
+
 export default router;
