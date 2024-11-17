@@ -23,17 +23,38 @@ export class AddressController {
 
   async getUserAddresses(req: IGetUserAuthInfoRequest, res: Response) {
     try {
-        if(!req.userId){
-            throw new Error("User is not authenticated");
-        }
+      if (!req.userId) {
+        throw new Error("User is not authenticated");
+      }
 
-        const addresses: Address[] = await this.addressService.getUserAddresses(+req.userId);
-        // const sortedAdresses = addresses.sort((a, b) =>{
-        //     return b.is_default - a.is_default
-        // })
+      const addresses: Address[] = await this.addressService.getUserAddresses(
+        +req.userId
+      );
+      // const sortedAdresses = addresses.sort((a, b) =>{
+      //     return b.is_default - a.is_default
+      // })
 
-        res.json(addresses)
+      res.json(addresses);
+    } catch (error) {
+      res.status(500).json({
+        message: error,
+      });
+    }
+  }
+  async deleteSingleUserAddress(req: IGetUserAuthInfoRequest, res: Response) {
+    try {
+      if (!req.userId) {
+        throw new Error("User is not authenticated");
+      }
 
+      const deleteAddress: boolean =
+        await this.addressService.deleteSingleUserAddress(
+          +req.params.address_id
+        );
+
+      res.json({
+        message: "Cart Successfully Deleted",
+      });
     } catch (error) {
       res.status(500).json({
         message: error,

@@ -13,4 +13,8 @@ router.get("/", authenticateToken, (req, res) => {
   addressController.getUserAddresses(req, res);
 });
 
+router.delete("/delete/:address_id", authenticateToken, (req, res) => {
+    addressController.deleteSingleUserAddress(req, res);
+})
+
 export default router;
