@@ -85,7 +85,7 @@ Address.init(
       allowNull: false,
     },
     phone_number: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT.UNSIGNED,
       allowNull: true,
     },
     is_default:{
