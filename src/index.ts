@@ -8,6 +8,7 @@ import productRoutes from './routes/productRoutes';
 import cartRoutes from './routes/cartRoutes'
 import userRoutes from './routes/userRoutes'
 import addressRoutes from './routes/addressRoutes'
+import productReviewsRoutes from './routes/productReviewsRoutes'
 import cors from 'cors';
 
 dotenv.config();
@@ -26,6 +27,7 @@ app.use('/products', productRoutes);
 app.use('/cart', cartRoutes);
 app.use('/user', userRoutes);
 app.use('/address', addressRoutes);
+app.use("/product-review", productReviewsRoutes)
 
 // Error handling middleware
 app.use((err: any, req: any, res: any, next: any) => {

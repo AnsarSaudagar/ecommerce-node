@@ -22,7 +22,7 @@ module.exports = {
       },
       user_id: {
         type: Sequelize.BIGINT.UNSIGNED,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: "users", // Table name for User model
           key: "id",

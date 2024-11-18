@@ -6,7 +6,7 @@ import { Product } from "./Product";
 export interface ProductReviewsAttributes {
   id: number;
   product_id: number;
-  user_id: number;
+  user_id?: number;
   full_name: string;
   email: string;
   title: string;
@@ -23,6 +23,7 @@ export interface ProductReviewsAttributes {
 export interface ProductReviewsCreationAttributes
   extends Optional<
     ProductReviewsAttributes,
+    | "user_id"
     | "like_count"
     | "dislike_count"
     | "is_verified"
@@ -37,7 +38,7 @@ export class ProductReviews
 {
   public id!: number;
   public product_id!: number;
-  public user_id!: number;
+  public user_id?: number;
   public full_name!: string;
   public email!: string;
   public title!: string;
@@ -78,7 +79,7 @@ ProductReviews.init(
     },
     user_id: {
       type: DataTypes.BIGINT.UNSIGNED,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: User,
         key: "id",
