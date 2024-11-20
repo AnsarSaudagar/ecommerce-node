@@ -7,10 +7,10 @@ export interface ProductReviewsAttributes {
   id: number;
   product_id: number;
   user_id?: number;
-  full_name: string;
+  name: string;
   email: string;
-  title: string;
-  content: string;
+  title?: string;
+  content?: string;
   rating: number;
   like_count?: number;
   dislike_count?: number;
@@ -24,6 +24,8 @@ export interface ProductReviewsCreationAttributes
   extends Optional<
     ProductReviewsAttributes,
     | "user_id"
+    | "title"
+    | "content"
     | "like_count"
     | "dislike_count"
     | "is_verified"
@@ -39,10 +41,10 @@ export class ProductReviews
   public id!: number;
   public product_id!: number;
   public user_id?: number;
-  public full_name!: string;
+  public name!: string;
   public email!: string;
-  public title!: string;
-  public content!: string;
+  public title?: string;
+  public content?: string;
   public rating!: number;
   like_count?: number | undefined;
   dislike_count?: number | undefined;
@@ -87,7 +89,7 @@ ProductReviews.init(
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
     },
-    full_name: {
+    name: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
@@ -97,11 +99,11 @@ ProductReviews.init(
     },
     title: {
       type: DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: true,
     },
     content: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
     rating: {
       type: DataTypes.INTEGER,

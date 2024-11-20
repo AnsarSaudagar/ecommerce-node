@@ -30,7 +30,7 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      full_name: {
+      name: {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
@@ -40,11 +40,11 @@ module.exports = {
       },
       title: {
         type: Sequelize.STRING(255),
-        allowNull: false,
+        allowNull: true,
       },
       content: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       rating: {
         type: Sequelize.INTEGER,
