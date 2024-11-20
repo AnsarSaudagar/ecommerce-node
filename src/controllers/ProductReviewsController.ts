@@ -19,4 +19,15 @@ export class ProductReviewsController {
       res.status(400).json({ message: error });
     }
   }
+
+  async getProductReview(req: Request, res: Response){
+    try {
+        const reviews = await this.productReviewsService.getProductReview(+req.params.product_id);
+        res.json(reviews);
+    } catch (error) {
+        res.status(500).json({
+          message: error
+        })
+    }
+  }
 }

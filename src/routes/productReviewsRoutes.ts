@@ -8,5 +8,8 @@ const productReviewsController = new ProductReviewsController();
 router.post("/add", (req, res) => {
   productReviewsController.addNewProductReview(req, res);
 });
+router.get("/:product_id", (req, res) => {
+  productReviewsController.getProductReview(req, res);
+});
 
 export default router;
