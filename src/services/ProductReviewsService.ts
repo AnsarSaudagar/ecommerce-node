@@ -13,6 +13,7 @@ export class ProductReviewsService {
       where: {
         product_id: product_id,
       },
+      order: [['created_at', 'DESC']]
     });
 
     return reviews;
