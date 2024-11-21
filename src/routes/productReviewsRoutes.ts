@@ -12,4 +12,8 @@ router.get("/:product_id", (req, res) => {
   productReviewsController.getProductReview(req, res);
 });
 
+router.get("/count-avg/:product_id", (req, res) => {
+  productReviewsController.getProductReviewCountAndAvg(req, res);
+});
+
 export default router;

@@ -1,3 +1,4 @@
+import sequelize from "sequelize";
 import { ProductReviews } from "../models/ProductReviews";
 
 export class ProductReviewsService {
@@ -13,9 +14,24 @@ export class ProductReviewsService {
       where: {
         product_id: product_id,
       },
-      order: [['created_at', 'DESC']]
+      order: [["created_at", "DESC"]],
     });
 
     return reviews;
+  }
+
+  async getProductReviewCountAndAvg(product_id: number) {
+    const result = await ProductReviews.findOne({
+      attributes: [
+        [sequelize.fn("COUNT", sequelize.col("rating")), "rating_count"],
+        [sequelize.fn("AVG", sequelize.col("rating")), "average_rating"],
+      ],
+      where: {
+        product_id: product_id,
+      },
+      raw: true,
+    });
+
+    return result;
   }
 }
