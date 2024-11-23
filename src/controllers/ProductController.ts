@@ -40,14 +40,19 @@ export class ProductController {
     }
   }
 
-  async updateProduct(req: Request, res: Response){
+  async updateProduct(req: any, res: Response){
     try {
+       
       const product_details: any = req.body;
+      const imageFile = req.file
 
-      const updated_product = await this.productService.updateProduct(product_details)
+
+      const updated_product = await this.productService.updateProduct(product_details);
       
       res.json(updated_product);
     } catch (error: any) {
+      console.log(error);
+      
       res.status(500).json({ error: error.message });
     }
   }
