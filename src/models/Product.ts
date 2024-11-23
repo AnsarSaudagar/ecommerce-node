@@ -10,6 +10,7 @@ export interface ProductAttributes {
   price: number;
   description?: string | null;
   category_id: number;
+  image?: string;
   created_at?: Date | null;
   updated_at?: Date | null;
 }
@@ -17,7 +18,7 @@ export interface ProductAttributes {
 export interface ProductCreationAttributes
   extends Optional<
     ProductAttributes,
-    "description" | "created_at" | "updated_at"
+    "description" | "image" | "created_at" | "updated_at"
   > {}
 
 export class Product
@@ -29,6 +30,7 @@ export class Product
   public price!: number;
   public description?: string | null | undefined;
   public category_id!: number;
+  public image ?: string;
   public updated_at?: Date | null | undefined;
   public created_at?: Date | null | undefined;
 }
@@ -62,6 +64,10 @@ Product.init(
       },
       onUpdate: "CASCADE",
       onDelete: "SET NULL",
+    },
+    image: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
     },
     created_at: {
       type: DataTypes.DATE,
