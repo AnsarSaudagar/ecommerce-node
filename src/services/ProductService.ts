@@ -39,4 +39,11 @@ export class ProductService {
 
     return product;
   }
+
+  async updateProduct(product_details: Product) {
+    const product = await Product.findOne({
+      where: { id: product_details.id },
+    });
+    return await product?.update(product_details);
+  }
 }

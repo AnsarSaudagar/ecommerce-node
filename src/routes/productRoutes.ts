@@ -14,5 +14,9 @@ router.get("/get-product/:product_id", (req: Request, res: Response) => {
     productController.getSingleProduct(req, res);
 })
 
+router.patch("/update", (req: Request, res: Response)=>{
+  productController.updateProduct(req, res);
+});
+
 
 export default router;
