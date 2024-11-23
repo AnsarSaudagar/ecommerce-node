@@ -1,5 +1,6 @@
-import sequelize from "sequelize";
+import sequelize, { where } from "sequelize";
 import { ProductReviews } from "../models/ProductReviews";
+import { ReviewLikes } from "../models/ReviewLikes";
 
 export class ProductReviewsService {
   async addNewProductReview(
@@ -33,5 +34,19 @@ export class ProductReviewsService {
     });
 
     return result;
+  }
+
+  async likeReview(review_id: number, count: number) {
+    return await ProductReviews.increment("like_count", {
+      by: count,
+      where: { id: review_id },
+    });
+  }
+
+  async dislikeReview(review_id: number, count: number) {
+    return await ProductReviews.increment("dislike_count", {
+      by: count,
+      where: { id: review_id },
+    });
   }
 }

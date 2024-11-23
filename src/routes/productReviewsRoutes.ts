@@ -16,4 +16,10 @@ router.get("/count-avg/:product_id", (req, res) => {
   productReviewsController.getProductReviewCountAndAvg(req, res);
 });
 
+router.post("/like/:review_id", authenticateToken,(req, res)=>{
+  productReviewsController.likeReview(req, res);
+})
+router.post("/dislike/:review_id", authenticateToken,(req, res)=>{
+  productReviewsController.dislikeReview(req, res);
+})
 export default router;
