@@ -76,7 +76,7 @@ ReviewLikes.init(
   {
     sequelize,
     tableName: "review_likes",
-    timestamps: false,
+    timestamps: true,
   }
 );
 
