@@ -5,13 +5,16 @@ import { Product } from "./Product";
 export interface ProductImageAttributes {
   id: number;
   product_id: number;
-  image_name: string;
+  image_name?: string;
   created_at?: Date | null;
   updated_at?: Date | null;
 }
 
 export interface ProductImageCreationAttributes
-  extends Optional<ProductImageAttributes, "created_at" | "updated_at"> {}
+  extends Optional<
+    ProductImageAttributes,
+    "image_name" | "created_at" | "updated_at"
+  > {}
 
 export class ProductImage
   extends Model<ProductImageAttributes>
@@ -19,7 +22,7 @@ export class ProductImage
 {
   public id!: number;
   public product_id!: number;
-  public image_name!: string;
+  public image_name?: string;
   created_at?: Date | null;
   updated_at?: Date | null;
 }
@@ -42,7 +45,7 @@ ProductImage.init(
     },
     image_name: {
       type: DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: true,
     },
     created_at: {
       type: DataTypes.DATE,
@@ -58,9 +61,16 @@ ProductImage.init(
   {
     sequelize,
     tableName: "product_images",
-    timestamps: true,
+    timestamps: false,
+    hooks: {
+        async afterCreate(productImage, options) {
+          const newImageName = `product_${productImage.product_id}_${productImage.id}.png`;
+  
+          productImage.image_name = newImageName;
+          await productImage.save();
+        },
+      },
   }
 );
 
-
-ProductImage.belongsTo(Product, {foreignKey: "product_id"})
+ProductImage.belongsTo(Product, { foreignKey: "product_id" });

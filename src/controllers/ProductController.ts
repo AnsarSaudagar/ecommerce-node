@@ -1,13 +1,17 @@
 import { Request, Response } from "express";
 import { ProductService } from "../services/ProductService";
 import { Product } from "../models/Product";
-import fs from 'fs';
-import AWS from 'aws-sdk';
+import fs from "fs";
+import AWS from "aws-sdk";
+import { ProductImageService } from "../services/ProductImageService";
 
 export class ProductController {
   private productService: ProductService;
+  private productImageService: ProductImageService;
+
   constructor() {
     this.productService = new ProductService();
+    this.productImageService = new ProductImageService();
   }
 
   async getAllProducts(req: Request, res: Response) {
@@ -46,10 +50,20 @@ export class ProductController {
     try {
       const product_details: any = req.body;
       const imageFile = req.file;
-      
+
       if (imageFile) {
-        const fileName : string = `product_${product_details.id}.png`;
-        this.uploadToS3(imageFile, `products/product_${product_details.id}/${fileName}`);
+
+        const product_image = await this.productImageService.addProductImage({
+          product_id: product_details.id,
+        });
+
+
+        const fileName: string | undefined = product_image.image_name;
+        this.uploadToS3(
+          imageFile,
+          `products/product_${product_details.id}/${fileName}`
+        );
+        
         product_details.image = fileName;
       }
 
@@ -67,7 +81,7 @@ export class ProductController {
 
   async uploadToS3(file: any, filePath: string) {
     const s3 = new AWS.S3();
-    
+
     // S3 upload parameters
     const params = {
       Bucket: "angularecommerce",
