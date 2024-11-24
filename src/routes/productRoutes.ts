@@ -6,7 +6,8 @@ const productController = new ProductController();
 const multer = require('multer');
 
 // Configure Multer to handle file uploads
-    const upload = multer({ dest: 'uploads/' });
+    // const upload = multer({ dest: 'uploads' });
+const upload = multer({ storage: multer.memoryStorage() });
 
 router.get("/", (req: Request, res: Response) =>
   productController.getAllProducts(req, res)

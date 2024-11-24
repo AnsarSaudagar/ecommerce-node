@@ -34,6 +34,18 @@ app.use((err: any, req: any, res: any, next: any) => {
   res.status(err.status || 500).json({ message: err.message });
 });
 
+try {
+  const AWS = require('aws-sdk');
+  AWS.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION, // e.g., 'us-east-1'
+  });
+  
+} catch (error) {
+  
+}
+
 
 // Start Server
 sequelize.authenticate()
