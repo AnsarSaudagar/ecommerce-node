@@ -24,6 +24,14 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(userDetails.password, 10);
     userDetails.password = hashedPassword;
 
+    const existing_user = await User.findOne({where : {
+      email: userDetails.email,
+    }})
+
+    if(existing_user){
+      throw new Error("Email already exits");
+    }
+
     const user = await User.create(userDetails);
 
     return user;
