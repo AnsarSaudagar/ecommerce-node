@@ -50,7 +50,7 @@ export class AuthService {
   ): Promise<{ token: string; user: User | null, expiresIn: number }> {
     const user: User | null = await User.findOne({ where: { email: email } });
 
-    if (!user) throw new Error("User not found");
+    if (!user) throw new Error("Please enter a valid email");
 
     const isPassword = await bcrypt.compare(password, user.password);
     if (!isPassword) throw new Error("Invalid Password");
