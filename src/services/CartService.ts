@@ -20,7 +20,7 @@ export class CartService {
         {
           model: Product,
           as: "product",
-          attributes: ["id", "name", "description", "price"],
+          attributes: ["id", "name", "description", "price", "image"],
         },
       ],
       where: {
@@ -48,7 +48,7 @@ export class CartService {
             category_id: category_id,
           },
           as: "product",
-          attributes: ["id", "name", "description", "price"],
+          attributes: ["id", "name", "description", "price", "image"],
         },
       ],
     });
